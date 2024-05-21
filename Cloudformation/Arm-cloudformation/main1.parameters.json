@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "networkaddress": {
+            "value": [ "10.0.0.0/16" ]
+        },
+        "subnetAddress": {
+            "value": [ "10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24" ]
+        },
+        "subnetNames": {
+            "value": ["Web","Db","app"]
+        }
+    }
+}

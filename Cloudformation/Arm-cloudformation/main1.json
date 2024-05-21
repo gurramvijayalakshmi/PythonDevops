@@ -1,0 +1,72 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "networkaddress": {
+            "type": "array",
+            "metadata": {
+                "description": "This gives the network address"
+            },
+            "defaultValue": [ "10.0.0.0/16" ]
+        },
+        "subnetAddress": {
+            "type": "array",
+            "metadata": {
+                "description": "Address of subnets"
+            },
+            "defaultValue": [ "10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24" ]
+        },
+        "subnetNames": {
+            "type": "array",
+            "metadata": {
+                "description": "The names of the subnets "
+            },
+            "defaultValue":["Web","Db","app"]
+        }
+    },
+
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "name": "ntier",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2023-04-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "ntier",
+                "Environment": "Dev",
+                "CreatedBy": "ARM Templates"
+
+            },
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('networkaddress')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('subnetNames')[0]]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetAddress')[0]]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnetNames')[1]]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetAddress')[1]]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnetNames')[2  ]]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetAddress')[2]]"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {}
+}
