@@ -1,0 +1,27 @@
+!/bin/bash
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt-get install openjdk-17-jdk Jenkins
+
+create security group for ec2 -> create instance at that group with ubuntu(22.0) at t2: medium -> keypair :xxxxx -> select security group -> in advanced settings : user data : add the bash code above -> launch 
+Browse at : http:\\(ec2-instance-id):8080
+open the Jenkins 
+>> ssh ubuntu@xx.xxx.xxx.xxx
+>>~$ cat /var/log/cloud-init.log (installing java)
+>>~$ java -version
+
+~$ sudo systemctl start Jenkins.service (start Jenkins)
+
+open in browser they gives some code to get the administrator password 
+(>>sudo cat /var/lib/Jenkins/secerts/intial/AdminPassword)-> start using jenkins
+
+create first admin user
+create a job (as deploy_app) -> go to build environment -> build steps -> create token (printenv, whoami) -> save 
+
+goto usericon -> configure - apitoken -> add token -> named : python-> generate (it gives an token as an alphanumeric )
+
+
