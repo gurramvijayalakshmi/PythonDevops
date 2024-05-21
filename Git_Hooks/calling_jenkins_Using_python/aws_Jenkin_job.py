@@ -1,27 +1,31 @@
-"""This module will have code to call jenkins job
+"""this module will have codeto call Jenkins job
 """
 
 import os
-import time
 import requests
 
+JENKINS_URL = os.getenv("JENKINS_URL","https://13.123.234.345:8080") 
+# https://13.123.234.345:8080  this is an dummy value
 
-# get the value of Jenkins from environmental variable or set to default
-JENKINS_URL = os.getenv("JENKINS_URL", "http://13.233.147.163:8080")
-JENKINS_JOB = os.getenv("JENKINS_JOB", "deploy_app")
-JENKINS_TOKEN = os.getenv("JENKINS_TOKEN", "11bf9a3647ab419e3b3a5998cca75dee60")
-JENKINS_USER = os.getenv("JENKINS_USER", "qtdevops")
+JENKINS_JOB = os.getenv("JENKINS_JOB","Deploy_app")
+#Deploy_app is dummy name we have to specify the jenkin job name we used 
 
+JENKINS_TOKEN = os.getenv ("JENKINS_TOKEN", "jdhalfjjvdfgyrfjjfjnbvavhajjfhgh")
+#jdhalfjjvdfgyrfjjfjnbvavhajjfhgh is an dummy token we have generate the token in the jenkins job 
 
+JENKINS_USER = os.getenv("JENKINS_USER","pythonDevops")
+#pythonDevops is an dummy user name
+ 
 def trigger_jenkins_job():
-    """This function will trigger jenkins job"""
+    """ This function will trigger jenkins job
+    """
     job_url = f"{JENKINS_URL}/job/{JENKINS_JOB}/build"
-    response = requests.post(job_url, auth=(JENKINS_USER, JENKINS_TOKEN), timeout=30)
-    if response.status_code == 201:
-        print("Jenkins job triggered successfully")
-    else:
-        print(f"Failed to trigger Jenkins job {response.text}")
+    response = requests.post(job_url,auth= (JENKINS_USER,JENKINS_TOKEN), timeout= 30)
 
+    if response.status_code == 201:
+        print("Jenkins job is triggered successfully")
+    else :
+        print(f"Failed to trigger Jenkins job {response.txt}")
 
 def get_last_build_number():
     """This function will get the last build number"""
@@ -31,7 +35,6 @@ def get_last_build_number():
         return response.json()["number"]
     else:
         print(f"Failed to get last build number {response.text}")
-
 
 def get_build_status(build_number):
     """This function will get the build status"""
@@ -49,3 +52,4 @@ if __name__ == "__main__":
     build_id = get_last_build_number()
     status = get_build_status(build_id)
     print(f"build id: {build_id} build_status: {status}")
+         
